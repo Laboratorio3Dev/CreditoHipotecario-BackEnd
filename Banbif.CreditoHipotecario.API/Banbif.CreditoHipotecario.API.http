@@ -1,0 +1,6 @@
+@Banbif.CreditoHipotecario.API_HostAddress = http://localhost:5065
+
+GET {{Banbif.CreditoHipotecario.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
