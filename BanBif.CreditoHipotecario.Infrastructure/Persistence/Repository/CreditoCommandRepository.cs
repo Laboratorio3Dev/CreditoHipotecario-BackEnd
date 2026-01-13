@@ -1,6 +1,7 @@
 ﻿using BanBif.CreditoHipotecario.Application.Interfaces;
 using BanBif.CreditoHipotecario.Domain.Entites;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,17 @@ namespace BanBif.CreditoHipotecario.Infrastructure.Persistence.Repository
         public CreditoCliente  ObtenerPorDocumento(string documento)
         {
             return  _context.Clientes.FirstOrDefault(x => x.Documento == documento);
+        }
+
+        public async Task<CreditoCliente?> ObtenerAsync(
+           int codigoCliente,
+           CancellationToken cancellationToken)
+        {
+            return await _context.Set<CreditoCliente>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(
+                    x => x.Id == codigoCliente,
+                    cancellationToken);
         }
     }
 }

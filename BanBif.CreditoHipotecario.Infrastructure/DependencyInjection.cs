@@ -1,4 +1,5 @@
 ﻿using BanBif.CreditoHipotecario.Application.Interfaces;
+using BanBif.CreditoHipotecario.Domain.Services;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Context;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,17 @@ namespace BanBif.CreditoHipotecario.Infrastructure
             // Repositories
             services.AddScoped<ICreditoCommandRepository, CreditoCommandRepository>();
             services.AddScoped<ITipoCambioRepository, TipoCambioRepository>();
+            services.AddScoped<IAprobadoRepository, AprobadoRepository>();
+            services.AddScoped<ISimulacionRepository, SimulacionRepository>();
+            services.AddScoped<ISimulacionSpRepository, SimulacionSpRepository>();
+            services.AddScoped<ITasaRepository, TasaRepository>();
+            
+            
+            services.AddScoped<IAprobadoQuieroRepository, AprobadoQuieroRepository>();
+            services.AddScoped<IHorarioRepository, HorarioRepository>();
+            services.AddScoped<IPandoraRepository, PandoraRepository>();
 
+            services.AddScoped<PandoraService>();
             return services;
         }
     }

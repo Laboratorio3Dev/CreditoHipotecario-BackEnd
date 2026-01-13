@@ -1,6 +1,11 @@
+using Banbif.CreditoHipotecario.API.Middlewares;
 using BanBif.CreditoHipotecario.Application;
+using BanBif.CreditoHipotecario.Application.Common.Behaviors;
+using BanBif.CreditoHipotecario.Application.Interfaces;
 using BanBif.CreditoHipotecario.Infrastructure;
+using BanBif.CreditoHipotecario.Infrastructure.Persistence;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -26,6 +31,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddTransient(
+    typeof(IPipelineBehavior<,>),
+    typeof(TransactionBehavior<,>));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ManejadorErrorMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

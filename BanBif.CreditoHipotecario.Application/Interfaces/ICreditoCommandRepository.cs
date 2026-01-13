@@ -12,5 +12,8 @@ namespace BanBif.CreditoHipotecario.Application.Interfaces
         CreditoCliente ObtenerPorDocumento(string documento);
         void Agregar(CreditoCliente cliente);
         Task GuardarAsync(CancellationToken cancellationToke);
+        Task<CreditoCliente?> ObtenerAsync(
+        int codigoCliente,
+        CancellationToken cancellationToken);
     }
 }

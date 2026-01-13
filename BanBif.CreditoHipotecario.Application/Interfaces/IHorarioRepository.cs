@@ -1,0 +1,16 @@
+﻿using BanBif.CreditoHipotecario.Domain.Entites;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BanBif.CreditoHipotecario.Application.Interfaces
+{
+    public interface IHorarioRepository
+    {
+        Task<Ejecutivo?> ObtenerEjecutivoDisponibleAsync(
+            DateTime fechaRegistro,
+            CancellationToken cancellationToken);
+    }
+}

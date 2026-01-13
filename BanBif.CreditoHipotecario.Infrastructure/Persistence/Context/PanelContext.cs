@@ -12,6 +12,8 @@ namespace BanBif.CreditoHipotecario.Infrastructure.Persistence.Context
 
         public DbSet<CreditoCliente> Clientes { get; set; }
         public DbSet<TipoCambio> TipoCambio { get; set; }
+        public DbSet<Simulacion> Simulacion { get; set; }
+        public DbSet<Tasa> Tasa { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

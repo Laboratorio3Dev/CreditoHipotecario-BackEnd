@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BanBif.CreditoHipotecario.Application.Commands.Credito.Simular
+namespace BanBif.CreditoHipotecario.Application.Commands.Credito.ActualizarOferta
 {
-    internal class SimularResponseDto
+    internal class ActualizarOfertaCommand
     {
     }
 }
