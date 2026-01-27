@@ -36,7 +36,8 @@ namespace BanBif.CreditoHipotecario.Infrastructure
             services.AddScoped<IAprobadoQuieroRepository, AprobadoQuieroRepository>();
             services.AddScoped<IHorarioRepository, HorarioRepository>();
             services.AddScoped<IPandoraRepository, PandoraRepository>();
-
+            services.AddScoped<IConfiguracionRepository, ConfiguracionRepository>();
+            
             services.AddScoped<PandoraService>();
             return services;
         }

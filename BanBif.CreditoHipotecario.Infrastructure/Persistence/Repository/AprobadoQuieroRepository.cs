@@ -1,6 +1,7 @@
 ﻿using BanBif.CreditoHipotecario.Application.Interfaces;
 using BanBif.CreditoHipotecario.Domain.Entites;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,15 @@ namespace BanBif.CreditoHipotecario.Infrastructure.Persistence.Repository
             _context.Set<AprobadoQuiero>().Add(entity);
         }
 
+        public async Task<AprobadoQuiero?> ObtenerAsync(
+    int codigoQuiero,
+    CancellationToken cancellationToken)
+        {
+            return await _context.Set<AprobadoQuiero>()
+                .FirstOrDefaultAsync(
+                    x => x.Id == codigoQuiero,
+                    cancellationToken);
+        }
         public async Task GuardarAsync(CancellationToken cancellationToken)
         {
             await _context.SaveChangesAsync(cancellationToken);

@@ -37,5 +37,15 @@ namespace BanBif.CreditoHipotecario.Domain.Entites
                 FechaRegistro = DateTime.Now
             };
         }
+
+
+        public void Actualizar(int horario, string? ruta)
+        {
+            if (horario != 0)
+                Horario = horario;
+
+            if (!string.IsNullOrWhiteSpace(ruta))
+                Ruta = ruta;
+        }
     }
 }

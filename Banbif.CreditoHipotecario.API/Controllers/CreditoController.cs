@@ -1,5 +1,7 @@
-﻿using BanBif.CreditoHipotecario.Application.Commands.Credito.Login;
+﻿using BanBif.CreditoHipotecario.Application.Commands.Credito.ActualizarOferta;
+using BanBif.CreditoHipotecario.Application.Commands.Credito.Login;
 using BanBif.CreditoHipotecario.Application.Commands.Credito.ObtenerAprobado;
+using BanBif.CreditoHipotecario.Application.Commands.Credito.ObtenerConfiguracion;
 using BanBif.CreditoHipotecario.Application.Commands.Credito.RegistrarOferta;
 using BanBif.CreditoHipotecario.Application.Commands.Credito.Simular;
 using MediatR;
@@ -50,6 +52,26 @@ namespace Banbif.CreditoHipotecario.API.Controllers
             CancellationToken cancellationToken)
         {
             var result = await _sender.Send(command, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpPost("actualizar-oferta")]
+        public async Task<IActionResult> ActualizarOferta(
+    [FromBody] ActualizarOfertaCommand command,
+    CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(command, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpPost("obtener-configuracion")]
+        public async Task<IActionResult> ObtenerConfiguracion(
+    CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(
+                new ObtenerConfiguracionQuery(),
+                cancellationToken);
+
             return Ok(result);
         }
     }
