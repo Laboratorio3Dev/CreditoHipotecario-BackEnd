@@ -22,7 +22,7 @@ namespace Banbif.CreditoHipotecario.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody]  LoginCommand command, CancellationToken cancellationToken)
         {
             return Ok(await _sender.Send(command));
         }
