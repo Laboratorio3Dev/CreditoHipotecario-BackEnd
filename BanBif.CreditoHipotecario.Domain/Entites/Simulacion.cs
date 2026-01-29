@@ -40,7 +40,9 @@ namespace BanBif.CreditoHipotecario.Domain.Entites
             int tipoIngreso,
             int valorInmueble,
             bool flagDatos,
-            bool flagTerminos)
+            bool flagTerminos,
+            int PrimeraVivienda,
+            int MontoInicial)
         {
             return new Simulacion
             {
@@ -54,7 +56,9 @@ namespace BanBif.CreditoHipotecario.Domain.Entites
                 ValorInmueble = valorInmueble,
                 FlagDatosPersonales = flagDatos,
                 FlagTerminos = flagTerminos,
-                FechaRegistro = DateTime.Now
+                FechaRegistro = DateTime.Now,
+                PrimeraVivienda = PrimeraVivienda,
+                MontoInicial = MontoInicial
             };
         }
     }

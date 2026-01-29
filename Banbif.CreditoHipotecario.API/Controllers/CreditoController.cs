@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Banbif.CreditoHipotecario.API.Controllers
 {
-    [Route("api/credito/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CreditoController : ControllerBase
     {

@@ -21,5 +21,7 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.Simular
         public int ValorInmueble { get; set; }
         public bool FlagDatos { get; set; }
         public bool FlagTerminos { get; set; }
+        public int PrimeraVivienda { get; set; }
+        public int MontoInicial { get; set; }
     }
 }

@@ -45,21 +45,23 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.Simular
                 cmd.TipoIngreso,
                 cmd.ValorInmueble,
                 cmd.FlagDatos,
-                cmd.FlagTerminos
+                cmd.FlagTerminos,
+                cmd.PrimeraVivienda,
+                cmd.MontoInicial
             );
 
             _simulacionRepo.Agregar(simulacion);
-            // await _simulacionRepo.GuardarAsync(cancellationToken);
+          
 
-            // 🔴 Guardas para obtener el ID
+         
             await _simulacionRepo.GuardarAsync(cancellationToken);
 
-            // 2️⃣ Obtener tasas
+       
             var tasas = await _tasaRepo.ObtenerTodasAsync(cancellationToken);
 
             foreach (var tasa in tasas)
             {
-                // 3️⃣ Ejecutar SP
+              
                 var cuota = await _spRepo.CalcularCuotaAsync(
                     tasa.Valor,
                     cmd.DineroNecesita,
