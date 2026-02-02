@@ -5,6 +5,7 @@ using BanBif.CreditoHipotecario.Application.Interfaces;
 using BanBif.CreditoHipotecario.Infrastructure;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence;
 using BanBif.CreditoHipotecario.Infrastructure.Persistence.Context;
+using BanBif.CreditoHipotecario.Infrastructure.Persistence.Dapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -32,6 +33,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDapperExecutor, DapperExecutor>();
+
 
 builder.Services.AddTransient(
     typeof(IPipelineBehavior<,>),

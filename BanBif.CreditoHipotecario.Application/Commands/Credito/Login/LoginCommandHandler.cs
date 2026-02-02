@@ -38,7 +38,9 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.Login
                     cmd.Documento,
                     cmd.Celular,
                     cmd.Correo,
-                    cmd.TipoIngreso);
+                    cmd.TipoIngreso,
+                    cmd.Estadocivil
+                    );
 
                 _repo.Agregar(cliente);
                 await _repo.GuardarAsync(cancellationToken);
@@ -52,7 +54,7 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.Login
                     });
             }
 
-            cliente.ActualizarContacto(cmd.Celular, cmd.Correo, cmd.TipoIngreso);
+            cliente.ActualizarContacto(cmd.Celular, cmd.Correo, cmd.TipoIngreso,cmd.Estadocivil);
             await _repo.GuardarAsync(cancellationToken);
 
             if (!cliente.EsCliente)

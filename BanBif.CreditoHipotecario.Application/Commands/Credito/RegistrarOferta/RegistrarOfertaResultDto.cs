@@ -9,5 +9,6 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.RegistrarOferta
     public class RegistrarOfertaResultDto
     {
         public int codigoaprobadoquiero { get; set; }
+        public string telefonoEjecutivo { get; set; }
     }
 }

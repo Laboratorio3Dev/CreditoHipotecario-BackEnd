@@ -22,7 +22,7 @@ namespace BanBif.CreditoHipotecario.Infrastructure
             // DbContext
             services.AddDbContext<PanelContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("ConexionNPS")));
+                    configuration.GetConnectionString("Conexion")));
 
             // Repositories
             services.AddScoped<ICreditoCommandRepository, CreditoCommandRepository>();

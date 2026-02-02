@@ -33,12 +33,16 @@ namespace BanBif.CreditoHipotecario.Domain.Entites
 
         public string? Score { get; set; }
 
-
+        
+       // public string? CodigoLog { get; set; }
         public static CreditoCliente Crear(
        string documento,
        string celular,
        string correo,
-       int? tipoIngreso)
+       int? tipoIngreso,
+       string estadocivil
+   
+            )
         {
             return new CreditoCliente
             {
@@ -46,15 +50,20 @@ namespace BanBif.CreditoHipotecario.Domain.Entites
                 Celular = celular,
                 Correo = correo,
                 TipoIngreso = tipoIngreso,
-                EsCliente = false
+                EsCliente = false,
+                EstadoCivil = estadocivil,
+                //CodigoLog=codigoLog
             };
         }
 
-        public void ActualizarContacto(string celular, string correo, int? tipoIngreso)
+        public void ActualizarContacto(string celular, string correo, int? tipoIngreso ,string estadocivil
+       )
         {
             Celular = celular;
             Correo = correo;
             TipoIngreso = tipoIngreso;
+            EstadoCivil = estadocivil;
+           
         }
     }
 }

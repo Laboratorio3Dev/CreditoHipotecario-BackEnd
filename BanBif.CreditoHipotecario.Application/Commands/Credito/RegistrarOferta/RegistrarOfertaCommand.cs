@@ -16,5 +16,7 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.RegistrarOferta
         public int Horario { get; set; }
         public string? Ruta { get; set; }
         public string? UTM { get; set; }
+        public List<int> codigosaprobados { get; set; }
+        public string CodigoLog { get; set; }
     }
 }

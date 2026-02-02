@@ -11,8 +11,7 @@ namespace BanBif.CreditoHipotecario.Application.Interfaces
     {
         void Agregar(AprobadoQuiero entity);
         Task GuardarAsync(CancellationToken cancellationToken);
-        Task<AprobadoQuiero?> ObtenerAsync(
-       int codigoQuiero,
-       CancellationToken cancellationToken);
+        Task<AprobadoQuiero?> ObtenerAsync(int codigoQuiero,CancellationToken cancellationToken);
+        Task<string> EjecutarAsignacionEjecutivoAsync(int codigoCliente,string codigoLog);
     }
 }

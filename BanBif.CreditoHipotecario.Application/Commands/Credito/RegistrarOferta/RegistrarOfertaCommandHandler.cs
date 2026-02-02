@@ -40,45 +40,108 @@ namespace BanBif.CreditoHipotecario.Application.Commands.Credito.RegistrarOferta
             _pandoraService = pandoraService;
         }
 
+        //public async Task<ApiResponse<RegistrarOfertaResultDto>> Handle(
+        //    RegistrarOfertaCommand cmd,
+        //    CancellationToken cancellationToken)
+        //{
+        //    int ultimoId = 0;
+
+        //    // 1️⃣ Guardar todos
+        //    foreach (var item in cmd.codigosaprobados)
+        //    {
+        //        var quiero = AprobadoQuiero.Crear(
+        //            item,
+        //            cmd.CodigoCliente,
+        //            cmd.Horario,
+        //            cmd.Ruta,
+        //            cmd.UTM);
+
+        //        _quieroRepo.Agregar(quiero);
+        //        // último insertado
+        //        ultimoId = quiero.Id; // o trae el último creado
+        //    }
+
+        //    await _quieroRepo.GuardarAsync(cancellationToken);
+
+
+
+        //    // 2️⃣ SOLO UNA VEZ
+        //    var telefono = await _quieroRepo.EjecutarAsignacionEjecutivoAsync(
+        //        cmd.CodigoCliente,
+        //        cmd.CodigoLog.ToString());
+
+        //    // 3️⃣ respuesta
+        //    return ApiResponse<RegistrarOfertaResultDto>.Success(
+        //        new RegistrarOfertaResultDto
+        //        {
+        //            codigoaprobadoquiero = ultimoId,
+        //            telefonoEjecutivo = telefono
+        //        });
+
+        //    //var aprobado = await _aprobadoRepo.ObtenerIdAsync(cmd.CodigoAprobado, cancellationToken);
+        //    //var simulacion = await _simulacionRepo.ObtenerPorIdAsync(aprobado.Id, cancellationToken);
+
+        //    //var ejecutivo = await _horarioRepo.ObtenerEjecutivoDisponibleAsync(
+        //    //    quiero.FechaRegistro,
+        //    //    cancellationToken);
+
+        //    //// 3️⃣ Crear registro Pandora (DOMINIO)
+        //    //var pandora = _pandoraService.CrearRegistro(
+        //    //    quiero, cliente, aprobado, simulacion, ejecutivo);
+
+        //    //_pandoraRepo.Agregar(pandora);
+
+        //    //if (ejecutivo != null)
+        //    //    ejecutivo.IncrementarContador();
+
+        //    //return ApiResponse<RegistrarOfertaResultDto>.Success(
+        //    // new RegistrarOfertaResultDto
+        //    // {
+        //    //     codigoaprobadoquiero =0
+        //    // });
+
+
+        //}
+
         public async Task<ApiResponse<RegistrarOfertaResultDto>> Handle(
-            RegistrarOfertaCommand cmd,
-            CancellationToken cancellationToken)
+    RegistrarOfertaCommand cmd,
+    CancellationToken cancellationToken)
         {
-            //  Crear oferta
-            var quiero = AprobadoQuiero.Crear(
-                cmd.CodigoAprobado,
+            var quieroEntities = new List<AprobadoQuiero>();
+
+            // 1️⃣ Crear entidades
+            foreach (var item in cmd.codigosaprobados)
+            {
+                var quiero = AprobadoQuiero.Crear(
+                    item,
+                    cmd.CodigoCliente,
+                    cmd.Horario,
+                    cmd.Ruta,
+                    cmd.UTM);
+
+                _quieroRepo.Agregar(quiero);
+                quieroEntities.Add(quiero);
+            }
+
+            // 2️⃣ Guardar TODO junto (1 sola transacción EF)
+            await _quieroRepo.GuardarAsync(cancellationToken);
+
+            // 🔥 Ahora los IDs ya existen
+            int ultimoId = quieroEntities.Last().Id;
+
+            // 3️⃣ Ejecutar SP UNA SOLA VEZ (fuera de problemas de transacción)
+            var telefono = await _quieroRepo.EjecutarAsignacionEjecutivoAsync(
                 cmd.CodigoCliente,
-                cmd.Horario,
-                cmd.Ruta,
-                cmd.UTM);
+                cmd.CodigoLog.ToString());
 
-            _quieroRepo.Agregar(quiero);
-            await _quieroRepo.GuardarAsync(cancellationToken); // obtener ID
-
-            //// 2️⃣ Cargar datos
-            //var cliente = await _clienteRepo.ObtenerAsync(cmd.CodigoCliente, cancellationToken);
-            //var aprobado = await _aprobadoRepo.ObtenerIdAsync(cmd.CodigoAprobado, cancellationToken);
-            //var simulacion = await _simulacionRepo.ObtenerPorIdAsync(aprobado.Id, cancellationToken);
-           
-            //var ejecutivo = await _horarioRepo.ObtenerEjecutivoDisponibleAsync(
-            //    quiero.FechaRegistro,
-            //    cancellationToken);
-
-            //// 3️⃣ Crear registro Pandora (DOMINIO)
-            //var pandora = _pandoraService.CrearRegistro(
-            //    quiero, cliente, aprobado, simulacion, ejecutivo);
-
-            //_pandoraRepo.Agregar(pandora);
-
-            //if (ejecutivo != null)
-            //    ejecutivo.IncrementarContador();
-
-
+            // 4️⃣ Respuesta
             return ApiResponse<RegistrarOfertaResultDto>.Success(
                 new RegistrarOfertaResultDto
                 {
-                    codigoaprobadoquiero = quiero.Id
+                    codigoaprobadoquiero = ultimoId,
+                    telefonoEjecutivo = telefono
                 });
         }
+
     }
 }
